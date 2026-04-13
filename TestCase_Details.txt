@@ -1,0 +1,15 @@
+Calender
+Skills
+Queue
+hierarchy 
+RO
+Product
+Service request
+Assign skill to agent
+Add Campaign
+Add agent in Campaign (make agent first and assign skill )
+
+Supervisor
+Supervisor should be add on the particular campaign 
+
+
