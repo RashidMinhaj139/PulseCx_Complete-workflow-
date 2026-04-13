@@ -15,17 +15,37 @@ import time
 
 class EffectonAgent_1Class(unittest.TestCase):
 
+    # @classmethod
+    # def setUpClass(cls):
+    #     service = Service(ChromeDriverManager().install())
+    #     cls.driver = webdriver.Chrome(service=service)
+    #     cls.driver.maximize_window()
+
+    #     # Fail-fast wait for elements (5 seconds)
+    #     cls.fast_wait = WebDriverWait(cls.driver, 5)
+    #     # Longer wait for page load/navigation (20 seconds)
+    #     cls.long_wait = WebDriverWait(cls.driver, 20)
+
+    #     cls.screenshot_dir = os.path.join(os.getcwd(), "Screenshots")
+    #     os.makedirs(cls.screenshot_dir, exist_ok=True)
     @classmethod
     def setUpClass(cls):
+        # Chrome options for CI + local execution
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+
+        # Setup driver
         service = Service(ChromeDriverManager().install())
-        cls.driver = webdriver.Chrome(service=service)
-        cls.driver.maximize_window()
+        cls.driver = webdriver.Chrome(service=service, options=options)
 
-        # Fail-fast wait for elements (5 seconds)
-        cls.fast_wait = WebDriverWait(cls.driver, 5)
-        # Longer wait for page load/navigation (20 seconds)
-        cls.long_wait = WebDriverWait(cls.driver, 20)
+        # Waits
+        cls.fast_wait = WebDriverWait(cls.driver, 5)   # quick checks
+        cls.long_wait = WebDriverWait(cls.driver, 20)   # page loads
 
+        # Screenshot directory
         cls.screenshot_dir = os.path.join(os.getcwd(), "Screenshots")
         os.makedirs(cls.screenshot_dir, exist_ok=True)
 

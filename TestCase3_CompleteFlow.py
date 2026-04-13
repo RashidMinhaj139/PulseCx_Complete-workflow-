@@ -19,18 +19,39 @@ from selenium.webdriver import ActionChains
 
 class TestCase3_CompleteFlowFunction(unittest.TestCase):
 
+    # @classmethod
+    # def setUpClass(cls):
+    #     service = Service(ChromeDriverManager().install())
+    #     cls.driver = webdriver.Chrome(service=service)
+    #     # cls.driver.maximize_window()
+    #     cls.wait = WebDriverWait(cls.driver, 30)
+    #     cls.fast_wait = WebDriverWait(cls.driver, 10)  # Fast wait for campaign assignment & quick clicks
+
+
+    #     cls.screenshot_dir = os.path.join(os.getcwd(), "Screenshots")
+    #     if not os.path.exists(cls.screenshot_dir):
+    #         os.makedirs(cls.screenshot_dir)
+
     @classmethod
     def setUpClass(cls):
+        # Chrome options for CI + local execution
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+
+        # Setup Chrome driver
         service = Service(ChromeDriverManager().install())
-        cls.driver = webdriver.Chrome(service=service)
-        cls.driver.maximize_window()
+        cls.driver = webdriver.Chrome(service=service, options=options)
+
+        # Waits
         cls.wait = WebDriverWait(cls.driver, 30)
-        cls.fast_wait = WebDriverWait(cls.driver, 10)  # Fast wait for campaign assignment & quick clicks
+        cls.fast_wait = WebDriverWait(cls.driver, 10)
 
-
+        # Screenshot directory setup
         cls.screenshot_dir = os.path.join(os.getcwd(), "Screenshots")
-        if not os.path.exists(cls.screenshot_dir):
-            os.makedirs(cls.screenshot_dir)
+        os.makedirs(cls.screenshot_dir, exist_ok=True)
 
     def take_screenshot(self, name):
         path = os.path.join(self.screenshot_dir, f"{name}.png")

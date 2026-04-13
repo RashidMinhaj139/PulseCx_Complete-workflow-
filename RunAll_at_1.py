@@ -1,5 +1,10 @@
 import unittest
 import HtmlTestRunner
+import os  
+
+os.makedirs("Reports", exist_ok=True)
+os.makedirs("Screenshots", exist_ok=True)
+
 
 # Import your test case classes
 from Effect_on_Agent import EffectonAgent_1Class
